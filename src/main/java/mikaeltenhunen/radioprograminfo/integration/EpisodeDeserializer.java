@@ -28,12 +28,16 @@ public class EpisodeDeserializer extends StdDeserializer<Episode> {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         String title = node.get("title").asText();
         String description = node.get("description").asText();
+        ZonedDateTime publishDateUtc = parseMicrosoftDate(node);
+
+        return new Episode(title, description, publishDateUtc);
+    }
+
+    private ZonedDateTime parseMicrosoftDate(JsonNode node) {
         String microsoftDate = node.get("publishdateutc").asText();
-        System.out.println("MIIKKA " + microsoftDate);
         String timestamp = microsoftDate.replaceAll(".*/Date\\(([\\d+\\-]+)\\)/.*", "$1");
         Instant instant = Instant.ofEpochMilli(Long.parseLong(timestamp));
         ZonedDateTime publishDateUtc = instant.atZone(ZoneId.of("UTC"));
-
-        return new Episode(title, description, publishDateUtc);
+        return publishDateUtc;
     }
 }
