@@ -1,7 +1,4 @@
-package mikaeltenhunen.radioprograminfo.integration;
-
-import mikaeltenhunen.radioprograminfo.domain.ProgramId;
-import mikaeltenhunen.radioprograminfo.domain.ProgramName;
+package mikaeltenhunen.radioprograminfo.domain;
 
 import java.util.Objects;
 

@@ -32,4 +32,10 @@ class ProgramInfoFacadeRestTest {
         System.out.println(allPrograms);
     }
 
+    // TODO DO NOT CALL REAL API LIKE HERE
+    @Test
+    public void getLastBroadcast() {
+        target.getLastBroadcast(new ProgramId(5168));
+    }
+
 }

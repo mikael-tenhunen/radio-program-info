@@ -29,8 +29,14 @@ public class ProgramInfoFacadeRest implements ProgramInfoFacade {
     }
 
     @Override
-    public Broadcast getLastBroadcast(ProgramId id) {
-        // TODO
-        return null;
+    public Episode getLastBroadcast(ProgramId id) {
+        return webClient.get()
+                .uri("api.sr.se/api/v2/episodes/getlatest?format=JSON&programid=" + id)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(Latest.class)
+                .map(Latest::getEpisode)
+                .log()
+                .block();
     }
 }
