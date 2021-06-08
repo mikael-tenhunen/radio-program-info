@@ -1,7 +1,6 @@
 package mikaeltenhunen.radioprograminfo.integration;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -24,12 +23,10 @@ public class EpisodeDeserializer extends StdDeserializer<Episode> {
 
     @Override
     public Episode deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         String title = node.get("title").asText();
         String description = node.get("description").asText();
         ZonedDateTime publishDateUtc = parseMicrosoftDate(node);
-
         return new Episode(title, description, publishDateUtc);
     }
 
@@ -37,7 +34,6 @@ public class EpisodeDeserializer extends StdDeserializer<Episode> {
         String microsoftDate = node.get("publishdateutc").asText();
         String timestamp = microsoftDate.replaceAll(".*/Date\\(([\\d+\\-]+)\\)/.*", "$1");
         Instant instant = Instant.ofEpochMilli(Long.parseLong(timestamp));
-        ZonedDateTime publishDateUtc = instant.atZone(ZoneId.of("UTC"));
-        return publishDateUtc;
+        return instant.atZone(ZoneId.of("UTC"));
     }
 }
