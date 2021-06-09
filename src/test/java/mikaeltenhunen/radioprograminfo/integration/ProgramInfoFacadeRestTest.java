@@ -30,7 +30,7 @@ class ProgramInfoFacadeRestTest {
     // TODO DO NOT CALL REAL API LIKE HERE
     @Test
     public void getAllPrograms() {
-        Map<ProgramName, ProgramId> allPrograms = target.getAllPrograms();
+        Map<ProgramName, ProgramId> allPrograms = target.getAllPrograms().block();
         System.out.println(allPrograms);
         target.getAllPrograms();
         target.getAllPrograms();
@@ -39,7 +39,7 @@ class ProgramInfoFacadeRestTest {
     // TODO DO NOT CALL REAL API LIKE HERE
     @Test
     public void getLastBroadcast() {
-        target.getLastBroadcast(new ProgramId(5168));
+        target.getLastBroadcast(new ProgramId(5168)).block();
     }
 
 }

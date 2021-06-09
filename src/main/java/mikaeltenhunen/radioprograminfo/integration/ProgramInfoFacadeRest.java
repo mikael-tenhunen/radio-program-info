@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +20,7 @@ public class ProgramInfoFacadeRest implements ProgramInfoFacade {
     }
 
     @Override
-    public Map<ProgramName, ProgramId> getAllPrograms() {
+    public Mono<Map<ProgramName, ProgramId>> getAllPrograms() {
         return webClient.get()
                 .uri("api.sr.se/api/v2/programs/index?format=JSON&pagination=false")
                 .accept(MediaType.APPLICATION_JSON)
@@ -27,18 +28,16 @@ public class ProgramInfoFacadeRest implements ProgramInfoFacade {
                 .bodyToMono(Programs.class)
                 .map(programs -> programs.getPrograms().stream()
                         .collect(Collectors.toMap(Program::getName, Program::getId)))
-                .doOnNext(nameToIdMap -> logger.debug("nameToIdMap={}", nameToIdMap))
-                .block();
+                .doOnNext(nameToIdMap -> logger.debug("nameToIdMap={}", nameToIdMap));
     }
 
     @Override
-    public Episode getLastBroadcast(ProgramId id) {
+    public Mono<Episode> getLastBroadcast(ProgramId id) {
         return webClient.get()
                 .uri("api.sr.se/api/v2/episodes/getlatest?format=JSON&programid=" + id)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Episode.class)
-                .log()
-                .block();
+                .log();
     }
 }
