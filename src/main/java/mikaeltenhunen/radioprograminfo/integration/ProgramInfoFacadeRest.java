@@ -4,6 +4,8 @@ import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import mikaeltenhunen.radioprograminfo.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
+@CacheConfig(cacheNames = {"programNameToIdCache"})
 public class ProgramInfoFacadeRest implements ProgramInfoFacade {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -23,8 +26,10 @@ public class ProgramInfoFacadeRest implements ProgramInfoFacade {
     }
 
     @Override
+    @Cacheable("programNameToIdCache")
     @Bulkhead(name = "srClient")
     public Mono<Map<ProgramName, ProgramId>> getAllPrograms() {
+        logger.info("In getAllPrograms...");
         return webClient.get()
                 .uri("api.sr.se/api/v2/programs/index?format=JSON&pagination=false")
                 .accept(MediaType.APPLICATION_JSON)
