@@ -1,6 +1,5 @@
 package mikaeltenhunen.radioprograminfo.service;
 
-import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import mikaeltenhunen.radioprograminfo.domain.Episode;
 import mikaeltenhunen.radioprograminfo.domain.ProgramName;
 import mikaeltenhunen.radioprograminfo.integration.ProgramInfoFacade;
