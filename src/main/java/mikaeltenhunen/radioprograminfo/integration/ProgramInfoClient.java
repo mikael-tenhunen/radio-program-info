@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
-public interface ProgramInfoFacade {
+public interface ProgramInfoClient {
     Mono<Map<ProgramName, ProgramId>> getAllPrograms();
-    Mono<Episode> getLastBroadcast(ProgramId id);
+    Mono<Episode> getLatestEpisode(ProgramId id);
 }

@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 
 @Component
 @CacheConfig(cacheNames = {"programNameToIdCache"})
-public class ProgramInfoFacadeRest implements ProgramInfoFacade {
+public class ProgramInfoClientRest implements ProgramInfoClient {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final WebClient webClient;
 
-    public ProgramInfoFacadeRest(WebClient webClient) {
+    public ProgramInfoClientRest(WebClient webClient) {
         this.webClient = webClient;
     }
 
@@ -42,7 +42,7 @@ public class ProgramInfoFacadeRest implements ProgramInfoFacade {
 
     @Override
     @Bulkhead(name = "srClient")
-    public Mono<Episode> getLastBroadcast(ProgramId id) {
+    public Mono<Episode> getLatestEpisode(ProgramId id) {
         return webClient.get()
                 .uri("api.sr.se/api/v2/episodes/getlatest?format=JSON&programid=" + id)
                 .accept(MediaType.APPLICATION_JSON)

@@ -11,9 +11,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.Map;
 
 @Disabled
-class ProgramInfoFacadeRestTest {
+class ProgramInfoClientRestTest {
 
-    ProgramInfoFacadeRest target;
+    ProgramInfoClientRest target;
 
     @BeforeEach
     public void setUp() {
@@ -24,7 +24,7 @@ class ProgramInfoFacadeRestTest {
                                 .maxInMemorySize(16 * 1024 * 1024))
                         .build())
                 .build();
-        target = new ProgramInfoFacadeRest(webClient);
+        target = new ProgramInfoClientRest(webClient);
     }
 
     // TODO DO NOT CALL REAL API LIKE HERE
@@ -39,7 +39,7 @@ class ProgramInfoFacadeRestTest {
     // TODO DO NOT CALL REAL API LIKE HERE
     @Test
     public void getLastBroadcast() {
-        target.getLastBroadcast(new ProgramId(5168)).block();
+        target.getLatestEpisode(new ProgramId(5168)).block();
     }
 
 }

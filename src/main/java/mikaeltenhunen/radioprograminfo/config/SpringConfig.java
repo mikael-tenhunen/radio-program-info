@@ -1,8 +1,8 @@
 package mikaeltenhunen.radioprograminfo.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
-import mikaeltenhunen.radioprograminfo.integration.ProgramInfoFacade;
-import mikaeltenhunen.radioprograminfo.integration.ProgramInfoFacadeRest;
+import mikaeltenhunen.radioprograminfo.integration.ProgramInfoClient;
+import mikaeltenhunen.radioprograminfo.integration.ProgramInfoClientRest;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
@@ -35,13 +35,12 @@ public class SpringConfig {
 
     Caffeine<Object, Object > caffeineCache() {
         return Caffeine.newBuilder()
-                .expireAfterWrite(24, TimeUnit.HOURS)
-                .recordStats();
+                .expireAfterWrite(24, TimeUnit.HOURS);
     }
 
     @Bean
-    public ProgramInfoFacade programInfoFacade(WebClient webClient) {
-        return new ProgramInfoFacadeRest(webClient);
+    public ProgramInfoClient programInfoFacade(WebClient webClient) {
+        return new ProgramInfoClientRest(webClient);
     }
 
 

@@ -2,7 +2,7 @@ package mikaeltenhunen.radioprograminfo.service;
 
 import mikaeltenhunen.radioprograminfo.domain.Episode;
 import mikaeltenhunen.radioprograminfo.domain.ProgramName;
-import mikaeltenhunen.radioprograminfo.integration.ProgramInfoFacade;
+import mikaeltenhunen.radioprograminfo.integration.ProgramInfoClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,13 +13,13 @@ import reactor.core.publisher.Mono;
 
 @RestController()
 @RequestMapping("radio-program-info")
-public class RadioProgramInfoController {
+public class ProgramInfoController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final ProgramInfoFacade programInfoFacade;
+    private final ProgramInfoClient programInfoClient;
 
-    public RadioProgramInfoController(ProgramInfoFacade programInfoFacade) {
-        this.programInfoFacade = programInfoFacade;
+    public ProgramInfoController(ProgramInfoClient programInfoClient) {
+        this.programInfoClient = programInfoClient;
     }
 
     @GetMapping("/latest-episode")
@@ -28,10 +28,10 @@ public class RadioProgramInfoController {
         // TODO handle null or empty programName
         // TODO get programId from cached map of programName to programId
 
-        return programInfoFacade.getAllPrograms()
+        return programInfoClient.getAllPrograms()
                 .doOnNext(nameToId -> logger.info("nameToId has size={}", nameToId.size()))
                 .map(nameToId -> nameToId.get(programName))
-                .flatMap(programInfoFacade::getLastBroadcast);
+                .flatMap(programInfoClient::getLatestEpisode);
         // TODO handle programName that does not exist in map of programs
     }
 }
