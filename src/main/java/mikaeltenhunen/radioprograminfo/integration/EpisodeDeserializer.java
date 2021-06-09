@@ -1,6 +1,7 @@
 package mikaeltenhunen.radioprograminfo.integration;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -21,10 +22,10 @@ public class EpisodeDeserializer extends StdDeserializer<Episode> {
 
     @Override
     public Episode deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-        String title = node.get("title").asText();
-        String description = node.get("description").asText();
-        String microsoftDate = node.get("publishdateutc").asText();
+        TreeNode node = jsonParser.getCodec().readTree(jsonParser).get("episode");
+        String title = node.get("title").toString();
+        String description = node.get("description").toString();
+        String microsoftDate = node.get("publishdateutc").toString();
         ZonedDateTime publishDateUtc = MicrosoftDateConverter.convert(microsoftDate);
         return new Episode(title, description, publishDateUtc);
     }
