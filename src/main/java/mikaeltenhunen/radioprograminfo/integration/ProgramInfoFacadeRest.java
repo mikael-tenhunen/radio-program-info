@@ -1,15 +1,19 @@
 package mikaeltenhunen.radioprograminfo.integration;
 
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import mikaeltenhunen.radioprograminfo.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Component
 public class ProgramInfoFacadeRest implements ProgramInfoFacade {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -20,6 +24,7 @@ public class ProgramInfoFacadeRest implements ProgramInfoFacade {
     }
 
     @Override
+    @Bulkhead(name = "srClient")
     public Mono<Map<ProgramName, ProgramId>> getAllPrograms() {
         return webClient.get()
                 .uri("api.sr.se/api/v2/programs/index?format=JSON&pagination=false")
@@ -32,6 +37,7 @@ public class ProgramInfoFacadeRest implements ProgramInfoFacade {
     }
 
     @Override
+    @Bulkhead(name = "srClient")
     public Mono<Episode> getLastBroadcast(ProgramId id) {
         return webClient.get()
                 .uri("api.sr.se/api/v2/episodes/getlatest?format=JSON&programid=" + id)

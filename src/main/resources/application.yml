@@ -1,0 +1,10 @@
+spring:
+  application.name: radio-program-info
+
+server:
+  port: 8080
+
+resilience4j.bulkhead:
+  instances:
+    srClient:
+      maxConcurrentCalls: 3
