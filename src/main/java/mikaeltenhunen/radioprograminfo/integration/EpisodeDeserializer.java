@@ -7,8 +7,6 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import mikaeltenhunen.radioprograminfo.domain.Episode;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 public class EpisodeDeserializer extends StdDeserializer<Episode> {
@@ -26,14 +24,10 @@ public class EpisodeDeserializer extends StdDeserializer<Episode> {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         String title = node.get("title").asText();
         String description = node.get("description").asText();
-        ZonedDateTime publishDateUtc = parseMicrosoftDate(node);
+        String microsoftDate = node.get("publishdateutc").asText();
+        ZonedDateTime publishDateUtc = MicrosoftDateConverter.convert(microsoftDate);
         return new Episode(title, description, publishDateUtc);
     }
 
-    private ZonedDateTime parseMicrosoftDate(JsonNode node) {
-        String microsoftDate = node.get("publishdateutc").asText();
-        String timestamp = microsoftDate.replaceAll(".*/Date\\(([\\d+\\-]+)\\)/.*", "$1");
-        Instant instant = Instant.ofEpochMilli(Long.parseLong(timestamp));
-        return instant.atZone(ZoneId.of("UTC"));
-    }
+
 }
