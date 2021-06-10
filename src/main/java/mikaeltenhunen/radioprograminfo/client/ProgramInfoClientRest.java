@@ -18,11 +18,16 @@ import java.util.stream.Collectors;
 @CacheConfig(cacheNames = {"programNameToIdCache"})
 public class ProgramInfoClientRest implements ProgramInfoClient {
 
+    static final String ALL_PROGRAMS_PATH = "/api/v2/programs/index?format=JSON&pagination=false";
+    static final String GET_LATEST_PATH = "/api/v2/episodes/getlatest?format=JSON";
+    private final String baseUrl;
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final WebClient webClient;
 
-    public ProgramInfoClientRest(WebClient webClient) {
+    public ProgramInfoClientRest(WebClient webClient, String baseUrl) {
         this.webClient = webClient;
+        this.baseUrl = baseUrl;
     }
 
     @Override
@@ -31,7 +36,7 @@ public class ProgramInfoClientRest implements ProgramInfoClient {
     public Mono<Map<ProgramName, ProgramId>> getAllPrograms() {
         logger.info("In getAllPrograms...");
         return webClient.get()
-                .uri("api.sr.se/api/v2/programs/index?format=JSON&pagination=false")
+                .uri(baseUrl + ALL_PROGRAMS_PATH)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Programs.class)
@@ -44,7 +49,7 @@ public class ProgramInfoClientRest implements ProgramInfoClient {
     @Bulkhead(name = "srClient")
     public Mono<Episode> getLatestEpisode(ProgramId id) {
         return webClient.get()
-                .uri("api.sr.se/api/v2/episodes/getlatest?format=JSON&programid=" + id)
+                .uri(baseUrl + GET_LATEST_PATH + "&programid=" + id)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Episode.class)

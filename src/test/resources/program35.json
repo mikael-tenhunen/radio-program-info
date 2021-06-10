@@ -1,0 +1,44 @@
+{
+  "copyright": "Copyright Sveriges Radio 2021. All rights reserved.",
+  "episode": {
+    "id": 1727033,
+    "title": "Med andra SM-finalen i handboll IKF Skövde - Sävehof",
+    "description": "Sport, P4 Skaraborg, Sveriges Radio.",
+    "url": "https://sverigesradio.se/avsnitt/1727033",
+    "program": {
+      "id": 35,
+      "name": "Sporten P4 Skaraborg"
+    },
+    "audiopreference": "default",
+    "audiopriority": "aac",
+    "audiopresentation": "format",
+    "publishdateutc": "/Date(1621094580000)/",
+    "imageurl": "https://static-cdn.sr.se/images/35/3116563_176_132.jpg?preset=api-default-square",
+    "imageurltemplate": "https://static-cdn.sr.se/images/35/3116563_176_132.jpg",
+    "broadcast": {
+      "availablestoputc": "/Date(1623693360000)/",
+      "playlist": {
+        "duration": 6758,
+        "publishdateutc": "/Date(1621094580000)/",
+        "id": 7836621,
+        "url": "http://api.sr.se/api/radio/radio.aspx?type=broadcast&id=7836621&codingformat=.m4a&metafile=asx",
+        "statkey": "/app/avsnitt/p4 skaraborg[k(208)]/sporten p4 skaraborg[p(35)]/[e(1727033)]"
+      },
+      "broadcastfiles": [
+        {
+          "duration": 6758,
+          "publishdateutc": "/Date(1621094580000)/",
+          "id": 7836621,
+          "url": "http://sverigesradio.se/topsy/ljudfil/srapi/7836621.m4a",
+          "statkey": "/app/avsnitt/p4 skaraborg[k(208)]/sporten p4 skaraborg[p(35)]/[e(1727033)]"
+        }
+      ]
+    },
+    "broadcasttime": {
+      "starttimeutc": "/Date(1621094580000)/",
+      "endtimeutc": "/Date(1621101600000)/"
+    },
+    "relatedepisodes": [ ],
+    "channelid": 208
+  }
+}

@@ -39,8 +39,13 @@ public class SpringConfig {
     }
 
     @Bean
-    public ProgramInfoClient programInfoClient(WebClient webClient) {
-        return new ProgramInfoClientRest(webClient);
+    public String srBaseUrl() {
+        return "api.sr.se";
+    }
+
+    @Bean
+    public ProgramInfoClient programInfoClient(WebClient webClient, String srBaseUrl) {
+        return new ProgramInfoClientRest(webClient, srBaseUrl);
     }
 
 
