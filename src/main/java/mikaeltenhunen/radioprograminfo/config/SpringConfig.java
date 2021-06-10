@@ -39,7 +39,7 @@ public class SpringConfig {
     }
 
     @Bean
-    public ProgramInfoClient programInfoFacade(WebClient webClient) {
+    public ProgramInfoClient programInfoClient(WebClient webClient) {
         return new ProgramInfoClientRest(webClient);
     }
 
