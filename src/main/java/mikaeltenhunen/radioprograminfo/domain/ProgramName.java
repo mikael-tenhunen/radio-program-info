@@ -1,8 +1,12 @@
 package mikaeltenhunen.radioprograminfo.domain;
 
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 public class ProgramName {
+
     private final String name;
 
     public ProgramName(String name) {

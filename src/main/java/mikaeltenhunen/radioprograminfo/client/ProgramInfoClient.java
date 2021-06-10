@@ -1,4 +1,4 @@
-package mikaeltenhunen.radioprograminfo.integration;
+package mikaeltenhunen.radioprograminfo.client;
 
 import mikaeltenhunen.radioprograminfo.domain.Episode;
 import mikaeltenhunen.radioprograminfo.domain.ProgramId;

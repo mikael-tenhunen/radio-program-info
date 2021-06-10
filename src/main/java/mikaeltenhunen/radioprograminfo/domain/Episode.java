@@ -1,9 +1,10 @@
 package mikaeltenhunen.radioprograminfo.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import mikaeltenhunen.radioprograminfo.integration.EpisodeDeserializer;
+import mikaeltenhunen.radioprograminfo.client.EpisodeDeserializer;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 @JsonDeserialize(using = EpisodeDeserializer.class)
 public class Episode {
@@ -30,6 +31,19 @@ public class Episode {
 
     public ZonedDateTime getPublishDateUtc() {
         return publishDateUtc;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Episode episode = (Episode) o;
+        return title.equals(episode.title) && description.equals(episode.description) && publishDateUtc.equals(episode.publishDateUtc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description, publishDateUtc);
     }
 
     @Override

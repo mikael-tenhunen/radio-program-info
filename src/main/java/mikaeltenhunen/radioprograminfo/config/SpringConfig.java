@@ -1,8 +1,8 @@
 package mikaeltenhunen.radioprograminfo.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
-import mikaeltenhunen.radioprograminfo.integration.ProgramInfoClient;
-import mikaeltenhunen.radioprograminfo.integration.ProgramInfoClientRest;
+import mikaeltenhunen.radioprograminfo.client.ProgramInfoClient;
+import mikaeltenhunen.radioprograminfo.client.ProgramInfoClientRest;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;

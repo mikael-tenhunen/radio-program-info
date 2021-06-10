@@ -1,4 +1,4 @@
-package mikaeltenhunen.radioprograminfo.integration;
+package mikaeltenhunen.radioprograminfo.client;
 
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import mikaeltenhunen.radioprograminfo.domain.*;
