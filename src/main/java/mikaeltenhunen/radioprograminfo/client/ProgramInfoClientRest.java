@@ -34,7 +34,7 @@ public class ProgramInfoClientRest implements ProgramInfoClient {
     @Cacheable("programNameToIdCache")
     @Bulkhead(name = "srClient")
     public Mono<Map<ProgramName, ProgramId>> getAllPrograms() {
-        logger.info("In getAllPrograms...");
+        logger.info("Retrieving all programs");
         return webClient.get()
                 .uri(baseUrl + ALL_PROGRAMS_PATH)
                 .accept(MediaType.APPLICATION_JSON)
@@ -52,7 +52,6 @@ public class ProgramInfoClientRest implements ProgramInfoClient {
                 .uri(baseUrl + GET_LATEST_PATH + "&programid=" + id)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(Episode.class)
-                .log();
+                .bodyToMono(Episode.class);
     }
 }

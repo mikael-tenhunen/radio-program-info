@@ -29,11 +29,10 @@ public class ProgramInfoController {
 
     @GetMapping("/latest-episode")
     public Mono<Episode> getLatestEpisode(@RequestParam ProgramName programName) {
-        logger.info("In getLatestEpisode with programName={}", programName);
+        logger.info("Received call to getLatestEpisode with programName={}", programName);
         validateProgramName(programName);
 
         return programInfoClient.getAllPrograms()
-                .doOnNext(nameToId -> logger.info("nameToId has size={}", nameToId.size()))
                 .map(nameToId -> nameToId.get(programName))
                 .flatMap(programInfoClient::getLatestEpisode);
     }

@@ -27,15 +27,16 @@ public class SpringConfig {
     }
 
     @Bean
-    public CacheManager cacheManager() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager("programNameToIdCache");
-        cacheManager.setCaffeine(caffeineCache());
-        return cacheManager;
-    }
-
-    Caffeine<Object, Object > caffeineCache() {
+    public Caffeine<Object, Object > caffeineCache() {
         return Caffeine.newBuilder()
                 .expireAfterWrite(24, TimeUnit.HOURS);
+    }
+
+    @Bean
+    public CacheManager cacheManager(Caffeine<Object, Object > caffeineCache) {
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager("programNameToIdCache");
+        cacheManager.setCaffeine(caffeineCache);
+        return cacheManager;
     }
 
     @Bean
